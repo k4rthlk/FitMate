@@ -1,0 +1,62 @@
+{% load static %}
+
+{% include "user/header.html" %}
+
+<style>
+     .c-btn {
+    background-color: #E95809;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+}
+</style>
+
+<section class="classtime-section class-time-table spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title"><br><br>
+                    <h2>PERSONAL TRAINER</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="classtime-table">
+            <table>
+                <tbody>
+                        <tr>
+                            <td class="hover-bg ts-item" data-tsmeta="crossfit">
+                                <img src="{{ tob.trainerid.trainerphoto.url }}" alt="User photo" style="width:150px; height:150px;"><br><br>
+                                <span>{{ tob.trainerid.name }}</span>
+                            </td>
+                        </tr>
+
+                </tbody>
+            </table>
+            <br>  <center>
+            <a href="{% url 'feedback' id=tob.trainerid.trainerid %}">
+                        <button type="submit" class="c-btn">WHAT YOU THINK ABOUT YOUR TRAINER</button>
+                    </a></center>
+        </div>
+    </div>
+</section>
+
+{% include "user/footer.html" %}
+
+<!-- Js Plugins -->
+<script src="{% static 'guest/index/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'guest/index/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/mixitup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'guest/index/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'guest/index/js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'guest/index/js/main.js' %}"></script>
+</body>
+
+</html>

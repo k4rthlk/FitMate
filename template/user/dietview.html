@@ -1,0 +1,57 @@
+{% load static %}
+
+{% include "user/header.html" %}
+
+<section class="classtime-section class-time-table spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title"><br><br>
+                    <h2>DIET</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="classtime-table">
+            {% if tob %}
+                <table>
+                    <tbody>
+                        {% for t in ti %}
+                        <tr>
+                            <td class="hover-bg ts-item" data-tsmeta="crossfit">
+
+                                    <span>{{ t.diet }}</span>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title"><br><br>
+                            <h2>YOU NEED TO BE IN AN ACTIVE PLAN TO VIEW WORKOUTS</h2>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% include "user/footer.html" %}
+
+<!-- Js Plugins -->
+<script src="{% static 'guest/index/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'guest/index/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/mixitup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'guest/index/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'guest/index/js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'guest/index/js/main.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+{% load static %}
+{% include "user/header.html" %}
+<script src="{% static '/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+<!--alert("check")-->
+  $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": '{{ csrf_token }}'
+            }
+        });
+
+                $('#district').change(function ()
+                 {
+                    var districtid = $(this).val();
+<!--alert(districtid)-->
+
+                    $.ajax({
+                type: "POST",
+                url: '{% url "filllocation" %}',
+                data: { districtid: districtid },
+                dataType: "json",
+                success: function (data) {
+<!--alert(data)-->
+
+
+                    $('#locationid').empty();
+
+                 var opt = $('<option />'); // here we're creating a new select option with for each city
+                 opt.val(0);
+                 opt.text('Choose location...');
+                 $('#locationid').append(opt);
+                $.each(data, function(key, val)
+ {
+                                var opt = $('<option />'); // here we're creating a new select option with for each city
+                                opt.val(val.locid);
+                                opt.text(val.locname);
+                                $('#locationid').append(opt); //here we will append these new select options to a dropdown with the id 'cities'
+                });
+                        }
+            });
+                    });
+
+
+});
+</script>
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link href="{% static 'admin/districtreg/vendor/mdi-font/css/material-design-iconic-font.min.css' %}"
+          rel="stylesheet" media="all">
+    <link href="{% static 'admin/districtreg/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet"
+          media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{% static 'admin/districtreg/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'admin/districtreg/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{% static 'admin/districtreg/css/main.css' %}" rel="stylesheet" media="all">
+</head>
+
+<body>
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Registration </h2>
+                <form method="POST" action="{% url 'userregistration' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Name</label>
+                                <input class="input--style-4" type="text" name="name">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Age</label>
+                                <input class="input--style-4" type="text" name="age">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Height</label>
+                                <div class="input-group-icon">
+                                    <input class="input--style-4 " type="text" name="height">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Gender</label>
+                                <div class="p-t-10">
+                                    <label class="radio-container m-r-45">Male
+                                        <input value="male" type="radio" checked="checked" name="gender">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="radio-container">Female
+                                        <input value="female" type="radio" name="gender">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Weight</label>
+                                <div class="input-group-icon">
+                                    <input class="input--style-4 " type="text" name="weight">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Address</label>
+                                <input class="input--style-4" type="text" name="address">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Email</label>
+                                <input class="input--style-4" type="email" name="email">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Phone Number</label>
+                                <input class="input--style-4" type="text" name="phone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Password</label>
+                            <input class="input--style-4" type="password" name="password">
+                        </div>
+                    </div>
+                        <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Upload Image</label>
+                            <input class="input--style-4" type="file" name="pic">
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="label">District</label>
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="subject" id="district">
+                                <option disabled="disabled" selected="selected">Choose district</option>
+                                {% for i in district %}
+                                <option value="{{ i.disid }}">{{ i.disname }}</option>
+                                {% endfor %}
+
+
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <label class="label">Location</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="location" id="locationid">
+                                    <option disabled="disabled" selected="selected">Choose location</option>
+
+                                </select>
+                                <div class="select-dropdown"></div>
+
+                            </div>
+                            <br>
+                            <label class="label">Select a Plan Category</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="catname">
+                                    <option disabled="disabled" selected="selected">Choose category</option>
+                                    {% for i in cat %}
+                                <option value="{{ i.catid }}">{{ i.catname }}</option>
+                                {% endfor %}
+
+
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="p-t-15">
+                        <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Js Plugins -->
+    <script src="{% static 'guest/index/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/mixitup.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'guest/index/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/masonry.pkgd.min.js' %}"></script>
+    <script src="{% static 'guest/index/js/main.js' %}"></script>
+</body>
+
+</html>

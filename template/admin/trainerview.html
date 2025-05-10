@@ -1,0 +1,75 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Trainers</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Name</th>
+                                            <th>Image</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Contact no</th>
+                                            <th>Address</th>
+                                            <th>Experience</th>
+                                            <th>Reg Date</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for e in tr %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{e.name}}</td>
+                                            <td><img src="{{ e.trainerphoto.url }}" alt="User photo"
+                                                     style="width:150px; height:150px;"></td>
+                                            <td>{{e.age}}</td>
+                                            <td>{{e.gender}}</td>
+                                            <td>{{e.phone}}</td>
+                                            <td>{{e.address}}</td>
+                                            <td>{{e.experience}}</td>
+                                            <td>{{ e.regdate|date:"Y-m-d" }}</td>
+
+                                            <td><a href="{% url 'traineredit' id=e.trainerid %}">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-warning">Edit
+                                                </button>
+                                            </a></td>
+                                            <td><a href="{% url 'trainerdelete' id=e.trainerid %}"
+                                                   onclick="return confirm('ARE YOU SURE.....')">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-danger">Delete
+                                                </button>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% include "admin/footer.html" %}
+

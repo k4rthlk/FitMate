@@ -1,0 +1,71 @@
+{% load static %}
+{% include "trainer/header.html" %}
+
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Workouts</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Workout</th>
+                                            <th>Plan</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for d in wobj %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{d.desc}}</td>
+                                            <td>{{d.planid.planname}}</td>
+                                            <td><a href="{% url 'workoutedit' id=d.wid %}">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-warning">Edit
+                                                </button>
+                                            </a></td>
+                                            <td><a href="{% url 'workoutdelete' id=d.wid %}"
+                                                   onclick="return confirm('ARE YOU SURE.....')">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-danger">Delete
+                                                </button>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% include "trainer/footer.html" %}
+
+
+
+
+
+
+
+
+
+
+
+
+

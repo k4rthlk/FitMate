@@ -1,0 +1,195 @@
+{% load static %}
+{% include "trainer/header.html" %}
+<script src="{% static 'jquery.min.js' %}"></script>
+<script>
+	$(document).ready(function () {
+<!--alert("check")-->
+
+$.ajaxSetup({
+		headers : {"X-CSRFToken" : '{{csrf_token}}'}
+		});
+		$("#user").change(function()
+		{
+<!--		alert("test")-->
+		var uid=$(this).val();
+		$("#uname").val(uid);
+<!--alert(uid);-->
+		var i=1;
+	$.ajax({
+				type:"POST",
+				url : '{% url "filldietassign" %}',
+				data : {userid :uid},
+				dataType:"json",
+				success : function(data)
+				{
+				$('#details').empty();
+				 // Populate table with new data
+               $.each(data, function(key, val) {
+    var id = val.userid;
+
+    var row = "<tr><td>" + val.age+ "</td><td>" + val.height + "</td><td>" + val.weight + "</td></tr>";
+    $('#details').append(row);
+    $("#age").val(val.age);
+    $("#height").val(val.height);
+    $("#weight").val(val.weight);
+});
+
+
+				}
+				});
+		});
+});
+function confirmDelete() {
+    return confirm("ARE YOU SURE.....");
+}
+</script>
+<style>
+    select{
+        outline: none;
+    margin: 0;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    width: 100%;
+    height:50px;
+    font-size: 14px;
+    font-family: inherit;
+    }
+</style>
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+        <div class="row">
+
+                        <div class="col-md-6 grid-margin stretch-card mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title" align="center">Predict Diet </h4>
+                        <p class="card-description">
+                        </p>
+                        <form method="POST" action="{% url 'predictdiet' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="label">User</label>
+                                <select class="input--style-4 label " name="uname" id="user">
+                                    <option selected>Choose User...</option>
+                                    {% for d in user %}
+                                    {% if d.status != "assigned" %}
+                                    <option value="{{ d.userid.userid }}">{{ d.userid.name }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Age</th>
+                                        <th>Height</th>
+                                        <th>Weight</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="details">
+
+                                    </tbody>
+                                </table>
+                               <input type="hidden" name="age" id="age">
+                                <input type="hidden" name="height" id="height">
+                                <input type="hidden" name="weight" id="weight">
+                                <label>Workout time</label>
+                                <input class="input--style-4 label" type="number" name="hours">
+                                   <input type="hidden" name="uname" id="uname">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Predict Diet Plan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-md-6 grid-margin stretch-card mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title" align="center">Diet Assign</h4>
+                        <p class="card-description">
+                        </p>
+                        <form method="POST" action="{% url 'dietassign' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+<!--                                <label class="label">User</label>-->
+<!--                                <select class="input&#45;&#45;style-4 label " name="uname" id="user">-->
+<!--                                    <option selected>Choose User...</option>-->
+<!--                                    {% for d in user %}-->
+<!--                                    {% if d.status != "assigned" %}-->
+<!--                                    <option value="{{ d.userid.userid }}">{{ d.userid.name }}</option>-->
+<!--                                    {% endif %}-->
+<!--                                    {% endfor %}-->
+<!--                                </select>-->
+
+                                <label class="label">Diet</label>
+                                <textarea class="input--style-4 label" name="diet" id="diet"
+                                          placeholder="Enter Diet..." style="height: 200px;width: 500px;" >{{request.session.dietdata}}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div></div>
+
+    {% include "trainer/footer.html" %}
+</div>
+
+
+</div>
+
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<!-- Required meta tags-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Colorlib Templates">
+<meta name="author" content="Colorlib">
+<meta name="keywords" content="Colorlib Templates">
+
+<!-- Title Page-->
+
+
+<!-- Icons font CSS-->
+<link href="{% static 'admin/districtreg/vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet"
+      media="all">
+<link href="{% static 'admin/districtreg/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet"
+      media="all">
+<!-- Font special for pages-->
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Vendor CSS-->
+<link href="{% static 'admin/districtreg/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+<link href="{% static 'admin/districtreg/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+
+<!-- Main CSS-->
+<link href="{% static 'admin/districtreg/css/main.css' %}" rel="stylesheet" media="all">
+
+
+<!-- Jquery JS-->
+<script src="{% static 'admin/districtreg/vendor/jquery/jquery.min.js' %}"></script>
+<!-- Vendor JS-->
+<script src="{% static 'admin/districtreg/vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'admin/districtreg/vendor/datepicker/moment.min.js' %}"></script>
+<script src="{% static 'admin/districtreg/vendor/datepicker/daterangepicker.js' %}"></script>
+
+<!-- Main JS-->
+<script src="{% static 'admin/districtreg/js/global.js' %}"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+

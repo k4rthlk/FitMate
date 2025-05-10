@@ -1,0 +1,57 @@
+{% load static %}
+{% include 'admin/header.html'%}
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#b3d569', '#ff9a44', '#6e69d5', '#db7edf','#69bcd5'
+          ],
+          label: 'Population'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+</script>
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+        <div class="card">
+            <div class="card-body">
+ <h2 align="center">Users in locations</h2>
+                    <div class="row" align="center">
+
+
+
+                                                <div id="container" style="width: 75%;">
+
+
+                        </div>
+                        <div class="col-12">
+                            <canvas id="pie-chart"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+            {% include 'admin/footer.html' %}

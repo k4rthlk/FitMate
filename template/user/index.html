@@ -1,0 +1,301 @@
+{% load static %}
+{% include "user/header.html" %}
+
+<!-- Hero Section Begin -->
+<section class="hero-section">
+    <div class="hero-items owl-carousel">
+        <div class="single-hero-item set-bg" data-setbg="{% static 'guest/index/img/hero-slider/hero-1.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="hero-text">
+                            <h2>Join Us Now</h2>
+                            <h1>FITMATE</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-hero-item set-bg" data-setbg="{% static 'guest/index/img/hero-slider/hero-2.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="hero-text">
+                            <h2>Join Us Now</h2>
+                            <h1>TO MAKE YOURSELF BETTER</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-hero-item set-bg" data-setbg="{% static 'guest/index/img/hero-slider/hero-3.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="hero-text">
+                            <h2>Join Us Now</h2>
+                            <h1>MAKE THE CHANGE AND INSPIRE MORE</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero End -->
+
+<!-- Feature Section Begin -->
+<section class="feature-section">
+
+</section>
+<!-- Feature Section End -->
+
+<!-- About Section Begin -->
+<section class="home-about spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="about-text">
+                    <h2>WELCOME TO FITMATE</h2>
+                    <p class="short-details">FitMate is a cutting-edge functional fitness system that can help
+                        everyday men.</p>
+                    <p class="long-details">Success isn’t really that difficult. There is a significant portion of
+                        the population here in North America, that actually want and need success to be hard! For
+                        those of you who are serious about having more, doing more, giving more and being more.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-img">
+                    <img src="{% static 'guest/index/img/home-about.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Section End -->
+
+
+<!-- Price Plan Section Begin -->
+<section class="price-section spad set-bg" data-setbg="{% static 'guest/index/img/price-bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>CHOOSE YOUR PRICING PLAN</h2>
+                    <p>These are the plans that comes under your registered category</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            {% if not tob %}
+            {% for t in pl %}
+            <div class="col-lg-4">
+                <form method="post" action="{% url 'applied' id=t.planid %}">
+                    {% csrf_token %}
+                    <div class="single-price-plan">
+                        <h4>{{t.planname}}</h4>
+                        <div class="price-plan">
+                            <h2>{{t.price}} <span>₹</span></h2>
+                            <p>{{t.validity}}</p>
+                        </div>
+                        <ul>
+                            <li>Unlimited access to the gym</li>
+                            <li>6 classes per week</li>
+                            <li>FREE drinking package</li>
+                        </ul>
+                        <button type="submit" class="primary-btn price-btn">Apply</button>
+                    </div>
+                    <input type="hidden" name="userid" value="{{userid}}">
+                    <input type="hidden" name="trainerid" value="{{trainerid}}">
+                </form>
+            </div>
+            {% endfor %}
+            {% else %}
+            {% if tob.status == "Confirmed" %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <h2>AlREADY ON A PLAN</h2>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="single-price-plan">
+                                    <h4>{{tob.planid.planname}}</h4>
+                                    <div class="price-plan">
+                                        <h2>{{tob.planid.price}} <span>₹</span></h2>
+                                        <p>{{tob.planid.validity}}</p>
+                                    </div>
+                                    <ul>
+                                        <li>Unlimited access to the gym</li>
+                                        <li>6 classes per week</li>
+                                        <li>FREE drinking package</li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% elif tob.status == "Requested" %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="single-price-plan">
+                                <h4>{{tob.planid.planname}}</h4>
+                                <div class="price-plan">
+                                    <h2>{{tob.planid.price}} <span>₹</span></h2>
+                                    <p>{{tob.planid.validity}}</p>
+                                </div>
+                                <ul>
+                                    <li>Unlimited access to the gym</li>
+                                    <li>6 classes per week</li>
+                                    <li>FREE drinking package</li>
+                                </ul>
+                                <button type="submit" disabled class="primary-btn price-btn"
+                                        style="cursor: not-allowed;">Pending
+                                </button>
+                            </div>
+                            <input type="hidden" name="userid" value="{{userid}}">
+                            <input type="hidden" name="trainerid" value="{{trainerid}}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {% for t in pl %}
+        <!-- HTML code to display pricing plans -->
+        <div class="col-lg-4">
+            <form method="post" action="{% url 'applied' id=t.planid %}">
+                {% csrf_token %}
+                <div class="single-price-plan">
+                    <h4>{{t.planname}}</h4>
+                    <div class="price-plan">
+                        <h2>{{t.price}} <span>₹</span></h2>
+                        <p>{{t.validity}}</p>
+                    </div>
+                    <ul>
+                        <li>Unlimited access to the gym</li>
+                        <li>6 classes per week</li>
+                        <li>FREE drinking package</li>
+                    </ul>
+                    <button type="submit" class="primary-btn price-btn">Apply</button>
+                </div>
+                <input type="hidden" name="userid" value="{{userid}}">
+                <input type="hidden" name="trainerid" value="{{trainerid}}">
+            </form>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endif %}
+
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+<!-- Price Plan Section End -->
+
+<!-- Choseus Section Begin -->
+<section class="chooseus-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Why People Choose Us</h2>
+                    <p>Our sport experts and latest sports equipment are the winning combination.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="choose-item">
+                    <img src="{% static 'guest/index/img/icons/chose-icon-1.png' %}" alt="">
+                    <h5>Support 24/24</h5>
+                    <p>One of the best ways to make a great vacation quickly horrible is to choose the wrong
+                        accommodations for your trip. </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="choose-item">
+                    <img src="{% static 'guest/index/img/icons/chose-icon-2.png' %}" alt="">
+                    <h5>Our trainer</h5>
+                    <p>If you are an infrequent traveler you may need some tips to keep the wife happy while you are
+                        jet setting around the globe.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="choose-item">
+                    <img src="{% static 'guest/index/img/icons/chose-icon-3.png' %}" alt="">
+                    <h5>Personalized sessions</h5>
+                    <p>To succeed at any endeavor, you must stay the course…no matter what the cost! Here are some
+                        surefire tips to help you on your journey.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="choose-item">
+                    <img src="{% static 'guest/index/img/icons/chose-icon-4.png' %}" alt="">
+                    <h5>Our equipment</h5>
+                    <p>Rugby and Stratford-upon-Avon. Additionally, there are many things to see and do in and
+                        around Coventry itself.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="choose-item">
+                    <img src="{% static 'guest/index/img/icons/chose-icon-5.png' %}" alt="">
+                    <h5>Classes daily</h5>
+                    <p>We would just not have the will in us to go about our daily lives. Its motivation that helps
+                        us get through the most mundane.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="choose-item">
+                    <img src="{% static 'guest/index/img/icons/chose-icon-6.png' %}" alt="">
+                    <h5>Focus on your health</h5>
+                    <p>But there is only so far we can go within the constraints of a family budget in building the
+                        perfect telescopic operation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Cta Section Begin -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cta-text">
+                    <h3>GeT Started Today</h3>
+
+
+                </div>
+            </div>
+</section>
+<!-- Cta Section End -->
+
+
+{% include "user/footer.html" %}
+
+<!-- Js Plugins -->
+<script src="{% static 'guest/index/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'guest/index/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/mixitup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'guest/index/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'guest/index/js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'guest/index/js/main.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+        <div class="row">
+            <div class="col-md-3 grid-margin stretch-card">
+            </div>
+            <div class="col-md-6 grid-margin stretch-card mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 align="center" class="card-title">Trainer Registration</h4>
+                        <p class="card-description">
+
+                        </p>
+                        <form method="POST" action="{% url 'trainerreg' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row row-space">
+
+                                <div class="form-group">
+
+
+                                    <label class="label">Name</label><br>
+                                    <input class="input--style-4" type="text" name="name" required style="width:555px;">
+                                    <label class="label">Age</label>
+
+                                    <input class="input--style-4" type="text" name="age" required>
+
+                                    <label class="label">Email</label>
+                                    <input class="input--style-4" type="email" name="email" required>
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input value="male" type="radio" checked="checked" name="gender"
+                                                   style="width:550px;">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input value="female" type="radio" name="gender">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="label">Password</label>
+                                        <input class="input--style-4" type="password" name="password" required>
+                                        <label class="label">Address</label>
+                                        <input class="input--style-4" type="text" name="address">
+                                        <label class="label">Phone Number</label>
+                                        <input class="input--style-4" type="text" name="phone" required>
+                                        <label class="label">Upload Image</label>
+                                        <input class="input--style-4" type="file" name="pic" required>
+                                        <label class="label">Experience</label>
+                                        <input class="input--style-4" type="text" name="exp" required><br>
+
+
+                                        <label class="label">District</label>
+
+
+                                        <select name="subject" id="district" class="form-control">
+                                            <option disabled="disabled" selected="selected">Choose district</option>
+                                            {% for i in district %}
+                                            <option value="{{ i.disid }}">{{ i.disname }}</option>
+                                            {% endfor %}
+
+
+                                        </select>
+
+
+                                        <br>
+
+                                        <label class="label">Location</label>
+
+                                        <select name="location" id="locationid" class="form-control">
+                                            <option disabled="disabled" selected="selected">Choose location</option>
+
+                                        </select>
+
+                                        <br>
+                                        <label class="label">Training Category</label>
+
+                                        <select name="catname" class="form-control">
+                                            <option disabled="disabled" selected="selected">Choose category</option>
+                                            {% for i in cat %}
+                                            <option value="{{ i.catid }}">{{ i.catname }}</option>
+                                            {% endfor %}
+
+
+                                        </select><br>
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card">
+                </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    {% include "admin/footer.html" %}
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    {% load static %}
+    <script src="{% static '/jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+    <!--alert("check")-->
+      $.ajaxSetup({
+                headers: {
+                    "X-CSRFToken": '{{ csrf_token }}'
+                }
+            });
+
+                    $('#district').change(function ()
+                     {
+                        var districtid = $(this).val();
+    <!--alert(districtid)-->
+
+                        $.ajax({
+                    type: "POST",
+                    url: '{% url "filllocation" %}',
+                    data: { districtid: districtid },
+                    dataType: "json",
+                    success: function (data) {
+    <!--alert(data)-->
+
+
+                        $('#locationid').empty();
+
+                     var opt = $('<option />'); // here we're creating a new select option with for each city
+                     opt.val(0);
+                     opt.text('Choose location...');
+                     $('#locationid').append(opt);
+                    $.each(data, function(key, val)
+     {
+                                    var opt = $('<option />'); // here we're creating a new select option with for each city
+                                    opt.val(val.locid);
+                                    opt.text(val.locname);
+                                    $('#locationid').append(opt); //here we will append these new select options to a dropdown with the id 'cities'
+                    });
+                            }
+                });
+                        });
+
+
+    });
+    </script>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    {% load static %}
+
+
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link href="{% static 'admin/districtreg/vendor/mdi-font/css/material-design-iconic-font.min.css' %}"
+          rel="stylesheet" media="all">
+    <link href="{% static 'admin/districtreg/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet"
+          media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{% static 'admin/districtreg/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'admin/districtreg/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{% static 'admin/districtreg/css/main.css' %}" rel="stylesheet" media="all">
+
+
+    <!-- Jquery JS-->
+    <script src="{% static 'admin/districtreg/vendor/jquery/jquery.min.js' %}"></script>
+    <!-- Vendor JS-->
+    <script src="{% static 'admin/districtreg/vendor/select2/select2.min.js' %}"></script>
+    <script src="{% static 'admin/districtreg/vendor/datepicker/moment.min.js' %}"></script>
+    <script src="{% static 'admin/districtreg/vendor/datepicker/daterangepicker.js' %}"></script>
+
+    <!-- Main JS-->
+    <script src="{% static 'admin/districtreg/js/global.js' %}"></script>
+
+    </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+    </html>

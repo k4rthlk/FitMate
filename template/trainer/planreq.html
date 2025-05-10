@@ -1,0 +1,62 @@
+{% load static %}
+
+{% include "trainer/header.html" %}
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">PLAN STATUS</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>User</th>
+                                            <th>Image</th>
+                                            <th>Plan</th>
+                                            <th>Status</th>
+
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for p in plan_requests %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{p.userid.name}}</td>
+                                            <td><img src="{{ p.userid.userphoto.url }}" alt="User photo"
+                                                     style="width:150px; height:150px;"></td>
+                                            <td>{{p.planid.planname}}</td>
+                                            <td>{{p.status}}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% include "trainer/footer.html" %}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,123 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Plans</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+
+                                        <thead>
+
+                                        <tr>
+
+                                            <th>Select Category
+                                                <select name="catid" class="form-control" id="catid">
+                                                    {% for c in cat %}
+                                                    <option value="{{ c.catid }}">{{ c.catname }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                            <th>PLAN</th>
+                                            <th>PRICE</th>
+                                            <th>VALIDITY</th>
+                                            <th>DESCRIPTION</th>
+
+                                            <th>EDIT</th>
+                                            <th>DELETE</th>
+
+                                        </tr>
+
+                                        </thead>
+
+                                        <tbody id="planname">
+                                        {% for p in plan %}
+
+                                        <tr>
+
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ i.planname }}</td>
+                                            <td>{{ i.price }}</td>
+                                            <td>{{ i.validity }}</td>
+                                            <td>{{ i.description }}</td>
+                                            <td><a href="">
+                                                <p>
+                                                    <button style="text-decoration=none" class="btn btn-warning">Edit
+                                                    </button>
+                                                </p>
+                                            </a></td>
+                                            <td><a href=" ">
+                                                <p>
+                                                    <button style="text-decoration=none" class="btn btn-danger">Delete
+                                                    </button>
+                                                </p>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% include "admin/footer.html" %}
+
+
+    <!DOCTYPE html>
+
+    {% load static %}
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+    <!--alert("check")-->
+
+    $.ajaxSetup({
+            headers : {"X-CSRFToken" : '{{csrf_token}}'}
+            });
+            $("#catid").change(function()
+            {
+    <!--		alert("test")-->
+            var catid=$(this).val();
+    <!--alert(catid);-->
+            var i=1;
+        $.ajax({
+                    type:"POST",
+                    url : '{% url "fillplan" %}',
+                    data : {catid :catid},
+                    dataType:"json",
+                    success : function(data)
+                    {
+                    $('#planname').empty();
+                     // Populate table with new data
+                   $.each(data, function(key, val) {
+        var id = val.planid;
+        var editUrl = '{% url "planedit" 0 %}'.replace('0', id);
+        var deleteUrl = '{% url "plandelete" 0 %}' .replace('0', id);
+        var row = "<tr><td>" + i++ + "</td><td>" + val.planname + "</td></td><td>" + val.price + "</td></td><td>" + val.validity + "</td></td><td>" + val.description + "</td><td><a href='" + editUrl + "'><button style='text-decoration:none' class='btn btn-warning'>Edit</button></a></td><td><a href='" + deleteUrl + "'onclick='return confirmDelete()'><button style='text-decoration:none' class='btn btn-danger'>Delete</button></a></td></tr>";
+        $('#planname').append(row);
+    });
+
+
+                    }
+                    });
+            });
+    });
+        function confirmDelete() {
+        return confirm("ARE YOU SURE.....");
+    }
+
+    </script>

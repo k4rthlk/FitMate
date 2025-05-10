@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer's Assigned Users</title>
+    <script src="{% static 'jquery.min.js' %}"></script>
+</head>
+<style>
+    .ajax-table {
+        padding-top: 200px; /* Adjust this value as needed */
+    }
+</style>
+<body>
+{% include "admin/header.html" %}
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">TRAINER'S ASSIGNED USERS</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <form action="{% url 'usersexcel' %}" method="post">
+                                        {% csrf_token %}
+                                        <table class="display expandable-table ajax-table"
+                                               style="width:100%;padding-top:100px">
+                                            <thead style="width:100%;">
+                                            <div class="row">
+                                                <tr>
+                                                    <th>Select Trainer</th>
+                                                    <th>
+                                                        <select name="trainerid" class="form-control" id="trainerid">
+                                                            <option>--Choose trainer--</option>
+                                                            {% for i in trainer %}
+                                                            <option value="{{ i.trainerid }}">{{ i.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </th>
+
+                                                </tr>
+                                            </div>
+
+                                            </thead>
+                                        </table><br>
+                                        <br>
+                                        <table class="display expandable-table ajax-table"
+                                               style="width:100%;padding-top:100px">
+                                            <thead style="width:100%;">
+<!--                                            <div class="row">-->
+<!--                                                <tr>-->
+<!--                                                    <th>Select Trainer</th>-->
+<!--                                                    <th>-->
+<!--                                                        <select name="trainerid" class="form-control" id="trainerid">-->
+<!--                                                            <option>&#45;&#45;Choose trainer&#45;&#45;</option>-->
+<!--                                                            {% for i in trainer %}-->
+<!--                                                            <option value="{{ i.trainerid }}">{{ i.name }}</option>-->
+<!--                                                            {% endfor %}-->
+<!--                                                        </select>-->
+<!--                                                    </th>-->
+
+<!--                                                </tr>-->
+<!--                                            </div>-->
+
+                                            </thead>
+                                            <tbody id="trainername"></tbody>
+                                        </table>
+                                        <br>
+                                        <input type="submit" value="Download" class="btn btn-primary"></td>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "admin/footer.html" %}
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        // Set up CSRF token for AJAX requests
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": '{{ csrf_token }}'
+            }
+        });
+
+        // Event listener for trainer selection change
+        $('#trainerid').change(function () {
+            var trainerid = $(this).val(); // Get the selected trainer ID
+            $.ajax({
+                type: "POST",
+                url: '{% url "filltrainersuser" %}',
+                data: { trainer: trainerid }, // Send the selected trainer ID
+                dataType: "json",
+                success: function (data) {
+                    // Clear previous table rows
+                    $('#trainername').empty();
+
+                    // Add header row to the table
+                    var header = "<tr style='margin-top:100px;'><th>Sl.No</th><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Age</th><th>Height(CM)</th><th>Weight(KG)</th></tr>";
+                    $('#trainername').append(header);
+
+                    // Populate table with new Trainer data
+                    $.each(data, function (index, val) {
+                        var row = "<tr><td>" + (index + 1) + "</td><td>" + val.userid__name + "</td><td>" + val.userid__loginid__email +"</td><td>" + val.userid__phone + "</td><td>" + val.userid__address +  "</td><td>" + val.userid__age + "</td><td>" + val.userid__height + "</td><td>" + val.userid__weight + "</td></tr>";
+                        $('#trainername').append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: " + status + ' - ' + error);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

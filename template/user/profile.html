@@ -1,0 +1,127 @@
+{% load static %}
+{% include "user/header.html" %}
+
+<style>
+    .contact-form form input {
+    width: 100%;
+    height: 48px;
+    border-radius: 2px;
+    background: #f9f9f9;
+    border: none;
+    padding-left: 20px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #1d1a1a;
+    -webkit-transition: all 0.3s;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    border: 1px solid #131313;
+}
+    .contact-form form textarea {
+    width: 100%;
+    height: 198px;
+    border-radius: 2px;
+    background: #f9f0f0;
+    border: none;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 16px;
+    color: #a6a6a6;
+    -webkit-transition: all 0.3s;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    resize: none;
+    margin-bottom: 25px;
+    border: 1px solid #131313;
+}
+    .c-btn {
+    background-color: #E95809;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+</style>
+
+<section class="contact-section spad">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-10 offset-lg-1">
+                <div class="contact-form">
+                    <h4 align="center">PROFILE</h4>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div align="center" class="col-lg-12">
+
+                                <img src="/images/{{bu.userphoto}}" style="width:150px; height:150px;">
+
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Name</p>
+                                <input type="text" disabled value="{{bu.name}}">
+
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Email</p>
+                                <input type="text" disabled value="{{bu.loginid.email}}">
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Phone</p>
+                                <input type="text" disabled value="{{bu.phone}}">
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Gender</p>
+                                <input type="text" disabled value="{{bu.gender}}">
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Height(cm)</p>
+                                <input type="text" disabled value="{{bu.height}}">
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Weight(kg)</p>
+                                <input type="text" disabled value="{{bu.weight}}">
+                            </div>
+
+                            <div class="col-lg-12">
+                                <p>Address</p>
+                                <input disabled value="{{bu.address}}"><br><br><br>
+                            </div>
+                        </div>
+                    </form>
+                    <a href="{% url 'useredit' id=bu.userid %}">
+                        <button type="submit" class="c-btn">Edit</button>
+                    </a>
+                    <a href="{% url 'changepassword' %}">
+                        <button type="submit" class="c-btn">CHANGE PASSWORD</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% include "user/footer.html" %}
+
+<!-- Js Plugins -->
+<script src="{% static 'guest/index/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'guest/index/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/mixitup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'guest/index/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'guest/index/js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'guest/index/js/main.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+  {% load static %}
+{% include "admin/header.html" %}
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p  align="center" class="card-title">Categories</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table   class="display expandable-table" style="width:100%">
+
+								<thead>
+			<tr>
+				<th>Sl No.</th>
+				<th>Category Name</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+		 {% for c in cat %}
+			<tr>
+				<td>{{forloop.counter}}</td>
+				<td>{{c.catname}}</td>
+				<td><a href="{% url 'categoryedit' id=c.catid %}"><button type="button" style="text-decoration=none" class="btn btn-warning">Edit</button></a></td>
+				<td><a href="{% url 'categorydelete' id=c.catid %}" onclick="return confirm('ARE YOU SURE.....')"><button type="button" style="text-decoration=none" class="btn btn-danger">Delete</button></a></td>
+			</tr>
+			{% endfor %}
+
+		</tbody>
+
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+              </div>
+
+		  </div>
+            </div>
+					       {% include "admin/footer.html" %}
+
+
+

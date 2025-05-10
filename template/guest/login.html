@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'guest/login/fonts/material-icon/css/material-design-iconic-font.min.css'%}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'guest/login/css/style.css'%}">
+    <style>
+        /* Style for forgot password link */
+        .forgot-password-link {
+            color: #FFFFFF; /* Change color as per your design */
+            font-size: 14px; /* Adjust font size */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .forgot-password-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Style for home button */
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: transparent; /* Transparent background */
+            color: #FFFFFF; /* White text color */
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold; /* Bold text */
+        }
+
+        .home-button:hover {
+            background-color: rgba(0, 123, 255, 0.3); /* Semi-transparent blue on hover */
+        }
+
+        /* Style for transparent login form */
+        .transparent-login-form {
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+            padding: 20px; /* Add padding for better visibility */
+            border-radius: 10px; /* Rounded corners */
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="main">
+    <br>
+
+    <!-- Home button -->
+    <a href="{% url 'gindex' %}" class="home-button">Home</a>
+
+    <div class="container" style="background-image:none !important; margin-top:0px; margin-bottom:0px; width:1000px;">
+        <div class="signup-content transparent-login-form">
+            <form method="POST" action="{% url 'login' %}" id="signup-form" class="signup-form">
+                {% csrf_token %}
+                <h2>Login </h2><br>
+                <br>
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="Email" required>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <input id="password-field" type="password" name="pass" class="form-control" placeholder="Password"
+                           required>
+                    <span toggle="#password"></span>
+                </div>
+
+                <div class="form-group">
+                    <a href="{% url 'forgotpassword' %}" class="forgot-password-link">forgot password?</a>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" name="submit" id="submit" class="form-submit submit" value="Sign in"/>
+                    <a href="{% url 'userregistration' %}">
+                        <input type="button" class="form-submit submit" value="Register "/></a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="{% static 'guest/login/vendor/jquery/jquery.min.js'%}"></script>
+<script src="{% static 'guest/login/js/main.js'%}"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

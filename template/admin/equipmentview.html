@@ -1,0 +1,67 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Equipments</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Equipment Name</th>
+                                            <th>Image</th>
+                                            <th>Reg Date</th>
+                                            <th>Description</th>
+                                            <th>quantity</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for e in eqp %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{e.equipname}}</td>
+                                            <td><img src="{{ e.equipphoto.url }}" alt="Equipment photo"
+                                                     style="width:150px; height:150px;"></td>
+                                            <td>{{ e.regdate|date:"Y-m-d" }}</td>
+                                            <td>{{e.description}}</td>
+                                            <td>{{e.quantity}}</td>
+                                            <td><a href="{% url 'equipmentedit' id=e.equipid %}">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-warning">Edit
+                                                </button>
+                                            </a></td>
+                                            <td><a href="{% url 'equipmentdelete' id=e.equipid %}"
+                                                   onclick="return confirm('ARE YOU SURE.....')">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-danger">Delete
+                                                </button>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% include "admin/footer.html" %}
+
+

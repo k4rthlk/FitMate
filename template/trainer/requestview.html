@@ -1,0 +1,78 @@
+{% load static %}
+
+{% include "trainer/header.html" %}
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">PLAN REQUESTS</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>User</th>
+                                            <th>Image</th>
+                                            <th>Height</th>
+                                            <th>Weight</th>
+                                            <th>BMI</th>
+                                            <th>Plan</th>
+                                            <th>Confirm</th>
+                                            <th>Reject</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for p in plan_requests %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ p.userid.name }}</td>
+                                            <!-- Assuming userid_id is the field that holds the user's ID -->
+                                            <td><img src="{{ p.userid.userphoto.url }}" alt="User photo"
+                                                     style="width:150px; height:150px;"></td>
+                                            <td>{{ p.userid.height }}</td>
+                                            <td>{{ p.userid.weight }}</td>
+                                            <td>{{ p.bmi }}</td>
+                                            <td>{{ p.planid.planname}}</td>
+                                            <!-- Assuming planid_id is the field that holds the plan's ID -->
+                                            <td><a href="{% url 'planconfirm' id=p.planassignid %}">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-warning">
+                                                    Confirm
+                                                </button>
+                                            </a></td>
+                                            <td><a href="{% url 'requestreject' id=p.planassignid %}"
+                                                   onclick="return confirm('ARE YOU SURE.....')">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-danger">
+                                                    Reject
+                                                </button>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% include "trainer/footer.html" %}
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+{% load static %}
+{% include "trainer/header.html" %}
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Users</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Name</th>
+                                            <th>Image</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Contact no</th>
+                                            <th>Hieght</th>
+                                            <th>Weight</th>
+                                            <th>Address</th>
+                                            <th>Reg Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for e in usr %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{e.name}}</td>
+                                            <td><img src="{{ e.userphoto.url }}" alt="User photo"
+                                                     style="width:150px; height:150px;"></td>
+                                            <td>{{e.age}}</td>
+                                            <td>{{e.gender}}</td>
+                                            <td>{{e.phone}}</td>
+                                            <td>{{e.height}}</td>
+                                            <td>{{e.weight}}</td>
+                                            <td>{{e.address}}</td>
+                                            <td>{{ e.regdate|date:"Y-m-d" }}</td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {% include "trainer/footer.html" %}
+
+
+

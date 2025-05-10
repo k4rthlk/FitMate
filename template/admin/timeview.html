@@ -1,0 +1,112 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Time</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+
+                                        <tr>
+
+                                            <th>Select Meredium
+                                                <select name="timeid" class="form-control" id="timeid">
+
+                                                    <option value="AM">AM</option>
+                                                    <option value="PM">PM</option>
+
+                                                </select>
+
+                                            <th>TIME</th>
+                                            <th>EDIT</th>
+                                            <th>DELETE</th>
+
+                                        </tr>
+
+                                        </thead>
+                                        <tbody id="timmeid">
+                                        {% for i in timeid %}
+
+                                        <tr>
+
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ i.time }}</td>
+                                            <td><a href="{% url 'timeedit' id=i.timeid %}">
+                                                <p>
+                                                    <button style="text-decoration=none" class="btn btn-warning">Edit
+                                                    </button>
+                                                </p>
+                                            </a></td>
+                                            <td><a href="{% url 'timedelete' id=i.timeid %}">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-danger">Delete
+                                                </button>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    {% include "admin/footer.html" %}
+
+
+    <!DOCTYPE html>
+
+    {% load static %}
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+    <!--alert("check")-->
+
+    $.ajaxSetup({
+            headers : {"X-CSRFToken" : '{{csrf_token}}'}
+            });
+            $("#timeid").change(function()
+            {
+    <!--		alert("test")-->
+            var timeid=$(this).val();
+    <!--alert(timeid);-->
+            var i=1;
+        $.ajax({
+                    type:"POST",
+                    url : '{% url "filltime" %}',
+                    data : {timeid :timeid},
+                    dataType:"json",
+                    success : function(data)
+                    {
+                    $('#timmeid').empty();
+                     // Populate table with new data
+                   $.each(data, function(key, val) {
+        var id = val.timeid;
+        var editUrl = '{% url "timeedit" 0 %}'.replace('0', id);
+        var deleteUrl = '{% url "timedelete" 0 %}'.replace('0', id);
+        var row = "<tr><td>" + i++ + "</td><td>" + val.time + "</td><td><a href='" + editUrl + "' ><button style='text-decoration:none' class='btn btn-warning'>Edit</button></a></td><td><a href='" + deleteUrl + "' onclick='return confirmDelete()'><button style='text-decoration:none' class='btn btn-danger'>Delete</button></a></td></tr>";
+        $('#timmeid').append(row);
+    });
+
+
+                    }
+                    });
+            });
+    });
+    function confirmDelete() {
+        return confirm("ARE YOU SURE.....");
+    }
+    </script>

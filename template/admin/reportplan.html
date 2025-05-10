@@ -1,0 +1,55 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#4CAF50',
+        '#FFC107',
+        '#2196F3',
+        '#FF5722',
+        '#9C27B0'
+          ],
+          label: 'Population'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+ };
+
+</script>
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+
+        <div class="row" align="center">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                                    <h2 align="center">MOST ASSIGNED PLANS</h2><br>
+
+                        <div id="container" style="width: 75%;">
+                            <canvas id="pie-chart"></canvas>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+{% include "admin/footer.html" %}
+

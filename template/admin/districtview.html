@@ -1,0 +1,60 @@
+{% load static %}
+{% include "admin/header.html" %}
+
+<div class="main-panel">
+    <div class="content-wrapper" style="width:100%;">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p align="center" class="card-title">Districts</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>District Name</th>
+                                            <th>Edit</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for d in depobj %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{d.disname}}</td>
+                                            <td><a href="{% url 'districtedit' id=d.disid %}">
+                                                <button type="button" style="text-decoration=none"
+                                                        class="btn btn-warning">Edit
+                                                </button>
+                                            </a></td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        </div>
+
+        {% include "admin/footer.html" %}
+
+
+
+
+
+
+
+
+

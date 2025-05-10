@@ -1,0 +1,86 @@
+{% load static %}
+
+{% include "user/header.html" %}
+
+<style>
+    .c-btn {
+       background-color: #E95809;
+       color: white;
+       padding: 10px 20px;
+       border: none;
+       border-radius: 5px;
+       text-align: center;
+       display: inline-block;
+       margin: 0 auto;
+   }
+
+   body {
+   margin: 0;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+   font-size: 1rem;
+   font-weight: 400;
+   line-height: 1.5;
+   color: #ffffff;
+   text-align: left;
+   background-color: #fff;
+}
+</style>
+
+<section class="classtime-section class-time-table spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title"><br><br>
+                    <h2>FEEDBACK</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="classtime-table">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="hover-bg ts-item" data-tsmeta="crossfit">
+                        <img src="/images/{{tbl.trainerphoto}}" alt="User photo"
+                             style="width:150px; height:150px;"><br><br>
+                        <span>{{ tob.trainerid.name }}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <form action="{% url 'feedback' tbl.trainerid %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="trainer">Trainer Name:</label>
+                    <input type="text" class="form-control" id="trainer" value="{{ tbl.name }}"
+                           readonly>
+                    <input type="hidden" class="form-control" name="trainer" value="{{ tbl.trainerid }}"
+                           readonly>
+                </div>
+                <div class="form-group">
+                    <label for="feedback">Your Feedback:</label>
+                    <textarea class="form-control" id="feedback" name="feedback" rows="5"></textarea>
+                </div>
+                <center>
+                    <button type="submit" class="c-btn">Submit Feedback</button>
+                </center>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% include "user/footer.html" %}
+
+<!-- Js Plugins -->
+<script src="{% static 'guest/index/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'guest/index/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/mixitup.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'guest/index/js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'guest/index/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'guest/index/js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'guest/index/js/main.js' %}"></script>
+</body>
+</html>
